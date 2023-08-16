@@ -55,6 +55,10 @@ if [ ! -f /www/server/panel/data/not_workorder.pl ]; then
 fi
 echo "已关闭活动推荐与在线客服."
 
+echo "开始清除端口限制"
+sed -i "s/ports = \['21','25','443','8080','888','8888','8443'\]/ports = \[\]/" /www/server/panel/class/public.py
+echo "bt端口清除完成"
+
 /etc/init.d/bt restart
 
 ( echo -e "57631" ) | bt 8 
