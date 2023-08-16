@@ -57,6 +57,15 @@ echo "已关闭活动推荐与在线客服."
 
 /etc/init.d/bt restart
 
+( echo -e "57631" ) | bt 8 
+echo "bt修改端口完成" 
+echo "/ntetv" > /www/server/panel/data/admin_path.pl
+echo "bt修改入口完成"
+bt 9
+/etc/init.d/bt restart 
+echo "bt缓存重置完成"
+bt 14
+
 echo -e "=================================================================="
 echo -e "\033[32m宝塔面板优化脚本执行完毕\033[0m"
 echo -e "=================================================================="
