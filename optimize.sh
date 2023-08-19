@@ -55,19 +55,23 @@ if [ ! -f /www/server/panel/data/not_workorder.pl ]; then
 fi
 echo "已关闭活动推荐与在线客服."
 
-echo "开始清除端口限制"
 sed -i "s/ports = \['21','25','443','8080','888','8888','8443'\]/ports = \[\]/" /www/server/panel/class/public.py
-echo "bt端口清除完成"
+echo "已解除端口限制...end"
 
-/etc/init.d/bt restart
+chattr -i /www/server/panel/data/plugin.json
+sed -i 's/"endtime": -1/"endtime": 99999/g' /www/server/panel/data/plugin.json
+chattr +i /www/server/panel/data/plugin.json
+echo "已解除付费限制...end"
 
 ( echo -e "57631" ) | bt 8 
-echo "bt修改端口完成" 
+echo "已修改后台端口...end"
+
 echo "/ntetv" > /www/server/panel/data/admin_path.pl
-echo "bt修改入口完成"
+echo "已修改后台入口...end"
+
 bt 9
 /etc/init.d/bt restart 
-echo "bt缓存重置完成"
+echo "已重置面板缓存...end"
 bt 14
 
 echo -e "=================================================================="
