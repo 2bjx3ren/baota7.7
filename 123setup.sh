@@ -1,4 +1,6 @@
-echo '#!/bin/bash
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 
 echo "创建虚拟内存目录"
 swapoff -a
