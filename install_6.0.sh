@@ -564,8 +564,10 @@ Set_Firewall(){
 		apt-get install -y ufw
 		if [ -f "/usr/sbin/ufw" ];then
 			ufw allow 80/tcp
-			ufw allow ${panelPort}/tcp
-			ufw allow ${sshPort}/tcp
+			ufw allow 88/tcp
+			ufw allow 443/tcp
+			ufw allow 57631/tcp
+			ufw allow 57630/tcp
 			ufw_status=`ufw status`
 			echo y|ufw enable
 			ufw default deny
@@ -574,8 +576,10 @@ Set_Firewall(){
 	else
 		if [ -f "/etc/init.d/iptables" ];then
 			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
-			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport ${panelPort} -j ACCEPT
-			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport ${sshPort} -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 88 -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 57631 -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 57630 -j ACCEPT
 			iptables -A INPUT -p icmp --icmp-type any -j ACCEPT
 			iptables -A INPUT -s localhost -d localhost -j ACCEPT
 			iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -595,8 +599,10 @@ Set_Firewall(){
 			systemctl start firewalld
 			firewall-cmd --set-default-zone=public > /dev/null 2>&1
 			firewall-cmd --permanent --zone=public --add-port=80/tcp > /dev/null 2>&1
-			firewall-cmd --permanent --zone=public --add-port=${panelPort}/tcp > /dev/null 2>&1
-			firewall-cmd --permanent --zone=public --add-port=${sshPort}/tcp > /dev/null 2>&1
+			firewall-cmd --permanent --zone=public --add-port=88/tcp > /dev/null 2>&1
+			firewall-cmd --permanent --zone=public --add-port=443/tcp > /dev/null 2>&1
+			firewall-cmd --permanent --zone=public --add-port=57631/tcp > /dev/null 2>&1
+			firewall-cmd --permanent --zone=public --add-port=57630/tcp > /dev/null 2>&1
 			firewall-cmd --reload
 		fi
 	fi
